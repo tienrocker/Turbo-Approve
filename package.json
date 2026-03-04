@@ -3,7 +3,7 @@
   "displayName": "Turbo Approve",
   "description": "Auto-scroll and auto-approve for AI coding assistants. Boost your workflow with one-click automation.",
   "version": "1.0.0",
-  "publisher": "vgplay",
+  "publisher": "vgp",
   "license": "MIT",
   "icon": "assets/icon.png",
   "engines": {
