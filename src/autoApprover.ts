@@ -1,5 +1,5 @@
-import * as vscode from "vscode";
-import { Logger } from "./logger";
+import * as vscode from 'vscode';
+import { Logger } from './logger';
 
 /**
  * AutoApprover monitors for approval prompts from AI coding assistants
@@ -21,20 +21,20 @@ export class AutoApprover implements vscode.Disposable {
   // Known approval-related commands from various AI assistants
   private static readonly APPROVE_COMMANDS = [
     // Antigravity IDE
-    "antigravity.approve",
-    "antigravity.approveAll",
-    "antigravity.acceptSuggestion",
-    "antigravity.approveCommand",
-    "antigravity.approveAndRun",
+    'antigravity.approve',
+    'antigravity.approveAll',
+    'antigravity.acceptSuggestion',
+    'antigravity.approveCommand',
+    'antigravity.approveAndRun',
     // Generic / common patterns
-    "workbench.action.acceptSelectedSuggestion",
-    "editor.action.inlineSuggest.commit",
+    'workbench.action.acceptSelectedSuggestion',
+    'editor.action.inlineSuggest.commit',
     // Cursor-like
-    "cursor.acceptSuggestion",
-    "cursor.approveCommand",
+    'cursor.acceptSuggestion',
+    'cursor.approveCommand',
     // Copilot
-    "github.copilot.acceptSuggestion",
-    "github.copilot.acceptCursorPanelSolution",
+    'github.copilot.acceptSuggestion',
+    'github.copilot.acceptCursorPanelSolution',
   ];
 
   constructor(private readonly logger: Logger) {}
@@ -117,7 +117,7 @@ export class AutoApprover implements vscode.Disposable {
         if (this.showNotifications) {
           // Use status bar message instead of modal notification to be less intrusive
           vscode.window.setStatusBarMessage(
-            `$(check) Turbo: Auto-approved`,
+            '$(check) Turbo: Auto-approved',
             2000,
           );
         }

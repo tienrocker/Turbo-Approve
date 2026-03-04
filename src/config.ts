@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 export interface TurboConfig {
   enabled: boolean;
@@ -10,23 +10,23 @@ export interface TurboConfig {
 }
 
 export class ConfigManager {
-  private static readonly SECTION = "turboApprove";
+  private static readonly SECTION = 'turboApprove';
 
   static getConfig(): TurboConfig {
     const config = vscode.workspace.getConfiguration(this.SECTION);
     return {
-      enabled: config.get<boolean>("enabled", false),
-      autoScroll: config.get<boolean>("autoScroll", true),
-      autoApprove: config.get<boolean>("autoApprove", true),
-      approveDelay: config.get<number>("approveDelay", 500),
-      showNotifications: config.get<boolean>("showNotifications", true),
-      scrollDebounce: config.get<number>("scrollDebounce", 150),
+      enabled: config.get<boolean>('enabled', false),
+      autoScroll: config.get<boolean>('autoScroll', true),
+      autoApprove: config.get<boolean>('autoApprove', true),
+      approveDelay: config.get<number>('approveDelay', 500),
+      showNotifications: config.get<boolean>('showNotifications', true),
+      scrollDebounce: config.get<number>('scrollDebounce', 150),
     };
   }
 
   static async setEnabled(enabled: boolean): Promise<void> {
     const config = vscode.workspace.getConfiguration(this.SECTION);
-    await config.update("enabled", enabled, vscode.ConfigurationTarget.Global);
+    await config.update('enabled', enabled, vscode.ConfigurationTarget.Global);
   }
 
   static async toggleEnabled(): Promise<boolean> {
@@ -37,9 +37,9 @@ export class ConfigManager {
 
   static async toggleAutoScroll(): Promise<boolean> {
     const config = vscode.workspace.getConfiguration(this.SECTION);
-    const current = config.get<boolean>("autoScroll", true);
+    const current = config.get<boolean>('autoScroll', true);
     await config.update(
-      "autoScroll",
+      'autoScroll',
       !current,
       vscode.ConfigurationTarget.Global,
     );
@@ -48,9 +48,9 @@ export class ConfigManager {
 
   static async toggleAutoApprove(): Promise<boolean> {
     const config = vscode.workspace.getConfiguration(this.SECTION);
-    const current = config.get<boolean>("autoApprove", true);
+    const current = config.get<boolean>('autoApprove', true);
     await config.update(
-      "autoApprove",
+      'autoApprove',
       !current,
       vscode.ConfigurationTarget.Global,
     );

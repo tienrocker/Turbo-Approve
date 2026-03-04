@@ -1,22 +1,22 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 export class Logger {
   private outputChannel: vscode.OutputChannel;
 
   constructor() {
-    this.outputChannel = vscode.window.createOutputChannel("Turbo Approve");
+    this.outputChannel = vscode.window.createOutputChannel('Turbo Approve');
   }
 
   info(message: string): void {
-    this.log("INFO", message);
+    this.log('INFO', message);
   }
 
   warn(message: string): void {
-    this.log("WARN", message);
+    this.log('WARN', message);
   }
 
   error(message: string, error?: Error): void {
-    this.log("ERROR", message);
+    this.log('ERROR', message);
     if (error?.stack) {
       this.outputChannel.appendLine(error.stack);
     }

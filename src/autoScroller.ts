@@ -1,5 +1,5 @@
-import * as vscode from "vscode";
-import { Logger } from "./logger";
+import * as vscode from 'vscode';
+import { Logger } from './logger';
 
 export class AutoScroller implements vscode.Disposable {
   private disposables: vscode.Disposable[] = [];
@@ -57,14 +57,14 @@ export class AutoScroller implements vscode.Disposable {
       }),
     );
 
-    this.logger.info("AutoScroller started");
+    this.logger.info('AutoScroller started');
   }
 
   stop(): void {
     this.enabled = false;
     this.clearDebounce();
     this.disposeListeners();
-    this.logger.info("AutoScroller stopped");
+    this.logger.info('AutoScroller stopped');
   }
 
   updateDebounce(ms: number): void {
@@ -89,7 +89,7 @@ export class AutoScroller implements vscode.Disposable {
       const range = new vscode.Range(lastLine, 0, lastLine, 0);
       editor.revealRange(range, vscode.TextEditorRevealType.Default);
     } catch (err) {
-      this.logger.error("Failed to scroll editor", err as Error);
+      this.logger.error('Failed to scroll editor', err as Error);
     }
   }
 
@@ -97,10 +97,10 @@ export class AutoScroller implements vscode.Disposable {
     try {
       // Use built-in command to scroll terminal to bottom
       vscode.commands.executeCommand(
-        "workbench.action.terminal.scrollToBottom",
+        'workbench.action.terminal.scrollToBottom',
       );
     } catch (err) {
-      this.logger.error("Failed to scroll terminal", err as Error);
+      this.logger.error('Failed to scroll terminal', err as Error);
     }
   }
 

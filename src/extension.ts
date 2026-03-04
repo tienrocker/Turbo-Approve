@@ -1,9 +1,9 @@
-import * as vscode from "vscode";
-import { ConfigManager } from "./config";
-import { Logger } from "./logger";
-import { AutoScroller } from "./autoScroller";
-import { AutoApprover } from "./autoApprover";
-import { StatusBarManager } from "./statusBar";
+import * as vscode from 'vscode';
+import { ConfigManager } from './config';
+import { Logger } from './logger';
+import { AutoScroller } from './autoScroller';
+import { AutoApprover } from './autoApprover';
+import { StatusBarManager } from './statusBar';
 
 let logger: Logger;
 let autoScroller: AutoScroller;
@@ -16,16 +16,16 @@ export function activate(context: vscode.ExtensionContext): void {
   autoApprover = new AutoApprover(logger);
   statusBar = new StatusBarManager();
 
-  logger.info("Turbo Approve is initializing...");
+  logger.info('Turbo Approve is initializing...');
 
   // Register commands
   context.subscriptions.push(
-    vscode.commands.registerCommand("turboApprove.toggle", async () => {
+    vscode.commands.registerCommand('turboApprove.toggle', async () => {
       const newState = await ConfigManager.toggleEnabled();
-      const label = newState ? "enabled" : "disabled";
+      const label = newState ? 'enabled' : 'disabled';
       logger.info(`Turbo Approve ${label}`);
       vscode.window.showInformationMessage(
-        `$(rocket) Turbo Approve: ${newState ? "ON" : "OFF"}`,
+        `$(rocket) Turbo Approve: ${newState ? 'ON' : 'OFF'}`,
       );
       syncState();
     }),
@@ -33,12 +33,12 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "turboApprove.toggleAutoScroll",
+      'turboApprove.toggleAutoScroll',
       async () => {
         const newState = await ConfigManager.toggleAutoScroll();
-        logger.info(`Auto-Scroll: ${newState ? "ON" : "OFF"}`);
+        logger.info(`Auto-Scroll: ${newState ? 'ON' : 'OFF'}`);
         vscode.window.showInformationMessage(
-          `Turbo Approve — Auto-Scroll: ${newState ? "ON" : "OFF"}`,
+          `Turbo Approve — Auto-Scroll: ${newState ? 'ON' : 'OFF'}`,
         );
         syncState();
       },
@@ -47,12 +47,12 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "turboApprove.toggleAutoApprove",
+      'turboApprove.toggleAutoApprove',
       async () => {
         const newState = await ConfigManager.toggleAutoApprove();
-        logger.info(`Auto-Approve: ${newState ? "ON" : "OFF"}`);
+        logger.info(`Auto-Approve: ${newState ? 'ON' : 'OFF'}`);
         vscode.window.showInformationMessage(
-          `Turbo Approve — Auto-Approve: ${newState ? "ON" : "OFF"}`,
+          `Turbo Approve — Auto-Approve: ${newState ? 'ON' : 'OFF'}`,
         );
         syncState();
       },
@@ -60,22 +60,22 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("turboApprove.showStatus", () => {
+    vscode.commands.registerCommand('turboApprove.showStatus', () => {
       const config = ConfigManager.getConfig();
       const approveCount = autoApprover.getApproveCount();
 
       const items = [
-        `Master: ${config.enabled ? "✅ ON" : "❌ OFF"}`,
-        `Auto-Scroll: ${config.autoScroll ? "✅ ON" : "❌ OFF"}`,
-        `Auto-Approve: ${config.autoApprove ? "✅ ON" : "❌ OFF"}`,
+        `Master: ${config.enabled ? '✅ ON' : '❌ OFF'}`,
+        `Auto-Scroll: ${config.autoScroll ? '✅ ON' : '❌ OFF'}`,
+        `Auto-Approve: ${config.autoApprove ? '✅ ON' : '❌ OFF'}`,
         `Approve Delay: ${config.approveDelay}ms`,
-        `Notifications: ${config.showNotifications ? "✅ ON" : "❌ OFF"}`,
+        `Notifications: ${config.showNotifications ? '✅ ON' : '❌ OFF'}`,
         `Total Approved: ${approveCount}`,
       ];
 
       vscode.window.showQuickPick(items, {
-        title: "🚀 Turbo Approve Status",
-        placeHolder: "Current configuration",
+        title: '🚀 Turbo Approve Status',
+        placeHolder: 'Current configuration',
       });
     }),
   );
@@ -83,7 +83,7 @@ export function activate(context: vscode.ExtensionContext): void {
   // Listen for config changes
   context.subscriptions.push(
     ConfigManager.onConfigChange(() => {
-      logger.info("Configuration changed");
+      logger.info('Configuration changed');
       syncState();
     }),
   );
@@ -94,7 +94,7 @@ export function activate(context: vscode.ExtensionContext): void {
   // Initial sync
   syncState();
 
-  logger.info("Turbo Approve activated successfully! 🚀");
+  logger.info('Turbo Approve activated successfully! 🚀');
 }
 
 function syncState(): void {
@@ -128,5 +128,5 @@ function syncState(): void {
 }
 
 export function deactivate(): void {
-  logger?.info("Turbo Approve deactivated");
+  logger?.info('Turbo Approve deactivated');
 }
