@@ -1,0 +1,131 @@
+{
+  "name": "turbo-approve",
+  "displayName": "Turbo Approve",
+  "description": "Auto-scroll and auto-approve for AI coding assistants. Boost your workflow with one-click automation.",
+  "version": "1.0.0",
+  "publisher": "vgplay",
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Keymaps"
+  ],
+  "keywords": [
+    "auto-approve",
+    "auto-scroll",
+    "turbo",
+    "productivity",
+    "ai",
+    "automation",
+    "antigravity"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tienrocker/Turbo-Approve"
+  },
+  "bugs": {
+    "url": "https://github.com/tienrocker/Turbo-Approve/issues"
+  },
+  "homepage": "https://github.com/tienrocker/Turbo-Approve#readme",
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "turboApprove.toggle",
+        "title": "Turbo Approve: Toggle On/Off",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "turboApprove.toggleAutoScroll",
+        "title": "Turbo Approve: Toggle Auto-Scroll"
+      },
+      {
+        "command": "turboApprove.toggleAutoApprove",
+        "title": "Turbo Approve: Toggle Auto-Approve"
+      },
+      {
+        "command": "turboApprove.showStatus",
+        "title": "Turbo Approve: Show Status"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "turboApprove.toggle",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t"
+      }
+    ],
+    "configuration": {
+      "title": "Turbo Approve",
+      "properties": {
+        "turboApprove.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Master toggle: Enable or disable Turbo Approve entirely.",
+          "order": 0
+        },
+        "turboApprove.autoScroll": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-scroll to the bottom when content changes in editors and terminals.",
+          "order": 1
+        },
+        "turboApprove.autoApprove": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically approve AI assistant actions (run commands, file edits, etc.).",
+          "order": 2
+        },
+        "turboApprove.approveDelay": {
+          "type": "number",
+          "default": 500,
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "Delay in milliseconds before auto-approving an action.",
+          "order": 3
+        },
+        "turboApprove.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notification toasts when auto-approving actions.",
+          "order": 4
+        },
+        "turboApprove.scrollDebounce": {
+          "type": "number",
+          "default": 150,
+          "minimum": 50,
+          "maximum": 2000,
+          "description": "Debounce interval (ms) for auto-scroll to prevent excessive scrolling.",
+          "order": 5
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node esbuild.js --production",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "lint": "eslint src --ext ts",
+    "pretest": "npm run compile",
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies",
+    "publish:ovsx": "ovsx publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0",
+    "ovsx": "^0.8.0"
+  }
+}

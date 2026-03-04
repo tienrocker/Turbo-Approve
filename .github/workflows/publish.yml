@@ -1,0 +1,70 @@
+name: Publish Extension
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    name: Publish to Marketplace
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Lint
+        run: npm run lint
+
+      - name: 🔨 Compile (production)
+        run: npm run vscode:prepublish
+
+      - name: 📦 Package VSIX
+        run: npx vsce package --no-dependencies
+
+      - name: 🚀 Publish to VS Code Marketplace
+        run: npx vsce publish --no-dependencies
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: 🌐 Publish to Open VSX Registry
+        run: npx ovsx publish *.vsix
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        continue-on-error: true
+
+      - name: 📋 Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: 🎉 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Turbo Approve v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## 🚀 Turbo Approve v${{ steps.version.outputs.VERSION }}
+
+            ### Installation
+            - **VS Code Marketplace**: [Install](https://marketplace.visualstudio.com/items?itemName=vgplay.turbo-approve)
+            - **Manual**: Download the `.vsix` file below and install via `Extensions: Install from VSIX...`
+
+            ### Changelog
+            See [CHANGELOG.md](https://github.com/vgplay/turbo-approve/blob/main/CHANGELOG.md) for details.
+          files: "*.vsix"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
